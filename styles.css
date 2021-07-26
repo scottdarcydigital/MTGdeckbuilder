@@ -4,4 +4,10 @@ body {
   font-family: sans-serif;
   text-align: center;
 }
+.card {
+  width: 90px;
+  height: 126px;
+  background-size: cover;
+  float: left;
+}
 /*# sourceMappingURL=styles.css.map */

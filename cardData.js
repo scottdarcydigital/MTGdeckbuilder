@@ -6,13 +6,25 @@ var _GET = 'https://api.scryfall.com/cards/search?q=c%3Awhite+cmc%3D1';
 
 $(document).ready(function() {
     $.get(_GET, function(data, status) {
-        console.log(data);
-        var card_url = data.data[0].image_uris.large;
-        console.log(card_url.toString());
+        console.log(data.data.length);
 
-        var card_el = `<div style="background-image:url('`+ card_url +`'); background-size:cover; width: 150px; height: 210px">`;
+        for (var i = 0; i < data.data.length; i++) {
+            var card_url = data.data[i].image_uris.large;
+            console.log(card_url);
 
-        $('#main-container').append(card_el);
+            // TODO : This needs optimising
+            if (localStorage.getItem("card-0") == null) {
+                var card_el = `<div class="card" style="background-image:url('` + card_url + `');">`;
+                $('#main-container').append(card_el);
+                localStorage.setItem("card-"+i, card_url);
+                console.log("taken from SF");
+            } else {
+                var card_el = `<div class="card" style="background-image:url('` + localStorage.getItem("card-"+i) + `');">`;
+                $('#main-container').append(card_el);
+                console.log("taken from LS");
+            }
+
+        }
     });
 });
 
