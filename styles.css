@@ -10,4 +10,30 @@ body {
   background-size: cover;
   float: left;
 }
+
+#full-container {
+  width: 100%;
+  height: auto;
+}
+
+#main-container {
+  width: 750px;
+  background-color: red;
+  float: left;
+}
+
+#RHS {
+  width: 180px;
+  height: 100%;
+  background-color: blue;
+  float: left;
+}
+
+.RHS-card-item {
+  width: 100%;
+  min-height: 10px;
+  margin-top: 5px;
+  background-color: rgb(49, 49, 45);
+}
+
 /*# sourceMappingURL=styles.css.map */
