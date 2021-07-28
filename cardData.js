@@ -1,5 +1,3 @@
-console.log('Card data is running...');
-
 function init() {
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -16,9 +14,6 @@ function init() {
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       firebase.analytics();
-
-    console.log(firebase.database());
-    console.log(firebaseConfig);
 }
 
 init(); // initialise connection
@@ -29,7 +24,6 @@ var database = firebase.database();
 function sendDeckData() {
     var $user_name = $('#user-name').val();
     var $deck_name = $('#deck-name').val();
-    console.log($deck_name);
     database.ref('Decks/' + $user_name + '/' + $deck_name).set({});
 }
 
@@ -38,24 +32,22 @@ var _GET = 'https://api.scryfall.com/cards/search?q=c%3Awhite+cmc%3D1';
 
 $(document).ready(function() {
     $.get(_GET, function(data, status) {
-        console.log(data.data.length);
         
         // if there is no localStorgae Deck data then initialise it, else draw from this data in order to source urls
-        if (!localStorage.length) {
+        // since the firebase end points add their own values to local toarage this is not appropriate and ust be standardised with the crd objects that you are avtuall using. Othwerise the code will not tirgger correcly
+
+        if (!localStorage.getItem('card-0')) {
             for (var i = 0; i < data.data.length; i++) {
                 var card_url = data.data[i].image_uris.large;
                 var card_name = data.data[i].name;
-                // console.log(card_name);
-                console.log(localStorage.length, 'LocalStorage Init();');
                 localStorage.setItem("card-"+i, card_url);
-                var card_el = `<div onclick="addToRSH(this); addToFirebaseDatabase(this);" name="`+card_name+`" class="card SF" style="background-image:url('` + localStorage.getItem("card-"+i) + `');">`;
+                var card_el = `<div onclick="addToFirebaseDatabase(this);" name="`+card_name+`" class="card SF" style="background-image:url('` + localStorage.getItem("card-"+i) + `');">`;
                 $('#main-container').append(card_el);
             }
         } else {
-            console.log('Data taken form existing LocalStorage();');
             for (var i = 0; i < data.data.length; i++) {
                 var card_name = data.data[i].name;
-                var card_el = `<div onclick="addToRSH(this); addToFirebaseDatabase(this);" name="`+card_name+`" class="card LS" style="background-image:url('` + localStorage.getItem("card-"+i) + `');">`;
+                var card_el = `<div onclick="addToFirebaseDatabase(this);" name="`+card_name+`" class="card LS" style="background-image:url('` + localStorage.getItem("card-"+i) + `');">`;
                 $('#main-container').append(card_el);
             }
         }
@@ -65,34 +57,15 @@ $(document).ready(function() {
     var RHS_FB_Data = firebase.database().ref('Decks/Scott105/MonoW');
 
     RHS_FB_Data.on('value', (snapshot) => {
+        $('#RHS').empty();
+        
         snapshot.forEach(function(child) {
             var cardName = child.val().cardName; 
-            console.log(child.val().cardName);
             var RSHCardItem = `<div name="`+ cardName +`" class="RHS-card-item"></div>`; 
             $('#RHS').append($(RSHCardItem).text(cardName));
         });
     });
-    
-
-    // FIELD REFERENCES
-
-    // DbRefPlayer_1.on('value', (snapshot) => {
-    //     $('#main-field-player-1').html('');  // causes bugs of cards replacing one another after a refresh
-    //     snapshot.forEach(function(child) {
-    //         var url = child.val().cardURL.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
-    //         $('#main-field-player-1').append(`<div class="card-on-field small-card extra-small-card" onmouseover="renderCardHoverImageField(this, this.style.backgroundImage);" onmouseleave="hideCardHoverImage()" style="background-image: url( ` + url + `)"></div>`);
-    //     });
-    // });
-
 });
-
-function addToRSH(card) {
-    document.getElementById('RHS').innerHTML = '';// ???
-    var cardName = $(card).attr('name');
-    var RSHCardItem = `<div class="RHS-card-item"></div>`; 
-    console.log($(card).attr('name'));
-    $('#RHS').append($(RSHCardItem).text(cardName));
-}
 
 function addToFirebaseDatabase(card) {
     var $user_name = $('#user-name').val();
@@ -100,9 +73,6 @@ function addToFirebaseDatabase(card) {
     var cardName = $(card).attr('name');
     var RSHCardItem = `<div class="RHS-card-item"></div>`; 
     var $RHSLength = $('#RHS').children().length;
-
-    console.log($(card).attr('name'));
-    console.log($RHSLength);
 
     database.ref('Decks/' + $user_name + '/' + $deck_name + '/' + $RHSLength).update({
         cardID: $RHSLength,

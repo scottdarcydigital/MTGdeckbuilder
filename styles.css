@@ -17,7 +17,7 @@ body {
 }
 
 #main-container {
-  width: 750px;
+  width: 400px;
   background-color: red;
   float: left;
 }
@@ -35,5 +35,3 @@ body {
   margin-top: 5px;
   background-color: rgb(49, 49, 45);
 }
-
-/*# sourceMappingURL=styles.css.map */
