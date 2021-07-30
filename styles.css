@@ -10,12 +10,10 @@ body {
   background-size: cover;
   float: left;
 }
-
 #full-container {
   width: 100%;
   height: auto;
 }
-
 #main-container {
   width: 400px;
   height: 379px;
@@ -24,17 +22,17 @@ body {
   overflow: hidden;
   margin-bottom: 100px;
 }
-
 #RHS {
   width: 180px;
   height: 379px;
   background-color: blue;
   float: left;
 }
-
 .RHS-card-item {
   width: 100%;
   min-height: 10px;
   margin-top: 5px;
-  background-color: rgb(49, 49, 45);
+  background-color: #31312d;
 }
+/*# sourceMappingURL=styles.css.map */
+/*# sourceMappingURL=styles.css.map */
