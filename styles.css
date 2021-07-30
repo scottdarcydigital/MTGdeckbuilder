@@ -43,12 +43,15 @@ body {
   width: 30px;
   background-color: pink;
 }
+
 #left-arrow {
   float: left;
 }
+
 #right-arrow {
   float: right;
 }
+
 #RHS {
   width: 20%;
   height: 379px;
