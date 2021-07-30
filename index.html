@@ -11,13 +11,22 @@
 <p>However, this time I wish to read using a REST API in JS in order to contact an open GET request to scryfall's API endpoint and return all the relevant URLS dynamticall over this website</p>
 <p> A good tutorial on getting started with this was found at https://www.youtube.com/watch?v=RTjd1nwvlj4</p>
 <p> and was used in conjunction with the vanilla JS function of JSON.parse(JS_Obj)</p>
-<label for="user-name">User name:</label><br>
-<input type="text" id="user-name" value="Scott105"><br>
-<label for="deck-name">Deck name:</label><br>
-<input type="text" id="deck-name" value="MonoW"><br>
-<button onclick="sendDeckData();" type="submit" value="Submit">Submit</button>  
+<div id="names-container">
+    <div id="user-name-container">
+        <label id="user-name-label" for="user-name-input">User name:</label><br>
+        <input id="user-name-input" type="text" value="Scott105"><br>
+    </div>
+    <div id="deck-name-container">
+        <label id="deck-name-label" for="deck-name-input">Deck name:</label><br>
+        <input id="deck-name-input" type="text" value="MonoW"><br>
+    </div>
+    <button id="submit-deck-button" onclick="sendDeckData();" type="submit" value="Submit">Submit</button><br>
+</div>
 <div id="full-container">
-    <div id="main-container"></div>
+    <div id="main-container">
+        <button id="left-arrow"> < </button>
+        <button id="right-arrow"> > </button>
+    </div>
     <div id="RHS">RHS MENU</div>
 </div>
 

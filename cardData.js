@@ -22,8 +22,8 @@ init(); // initialise connection
 var database = firebase.database();
 
 function sendDeckData() {
-    var $user_name = $('#user-name').val();
-    var $deck_name = $('#deck-name').val();
+    var $user_name = $('#user-name-input').val();
+    var $deck_name = $('#deck-name-input').val();
     database.ref('Decks/' + $user_name + '/' + $deck_name).set({});
 }
 
@@ -32,7 +32,7 @@ var _GET = 'https://api.scryfall.com/cards/search?q=c%3Awhite+cmc%3D1';
 
 $(document).ready(function() {
     $.get(_GET, function(data, status) {
-        
+
         // if there is no localStorgae Deck data then initialise it, else draw from this data in order to source urls
         // since the firebase end points add their own values to local toarage this is not appropriate and ust be standardised with the crd objects that you are avtuall using. Othwerise the code will not tirgger correcly
 
@@ -58,20 +58,21 @@ $(document).ready(function() {
 
     RHS_FB_Data.on('value', (snapshot) => {
         $('#RHS').empty();
-        
+
         snapshot.forEach(function(child) {
-            var cardName = child.val().cardName; 
-            var RSHCardItem = `<div name="`+ cardName +`" class="RHS-card-item"></div>`; 
+            var cardName = child.val().cardName;
+            var RSHCardItem = `<div name="`+ cardName +`" class="RHS-card-item"></div>`;
             $('#RHS').append($(RSHCardItem).text(cardName));
         });
     });
 });
 
 function addToFirebaseDatabase(card) {
-    var $user_name = $('#user-name').val();
-    var $deck_name = $('#deck-name').val();
+    var $user_name = $('#user-name-input').val();
+    var $deck_name = $('#deck-name-input').val();
+    var $deck_name = $('#deck-name-input').val();
     var cardName = $(card).attr('name');
-    var RSHCardItem = `<div class="RHS-card-item"></div>`; 
+    var RSHCardItem = `<div class="RHS-card-item"></div>`;
     var $RHSLength = $('#RHS').children().length;
 
     database.ref('Decks/' + $user_name + '/' + $deck_name + '/' + $RHSLength).update({
