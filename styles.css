@@ -1,0 +1,66 @@
+body {
+  background: #83b692;
+  color: yellow;
+  font-family: sans-serif;
+  text-align: center;
+}
+.card {
+  width: 90px;
+  height: 126px;
+  background-size: cover;
+  float: left;
+}
+#names-container {
+  width: 90%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+#submit-deck-button {
+  float: left;
+  margin-top: 18px;
+}
+#user-name-container,
+#deck-name-container {
+  float: left;
+  margin-right: 25px;
+}
+#full-container {
+  width: 100%;
+  height: auto;
+  margin-top: 45px;
+}
+#main-container {
+  width: 80%;
+  height: 379px;
+  background-color: red;
+  float: left;
+  overflow: hidden;
+  margin-bottom: 100px;
+}
+#right-arrow,
+#left-arrow {
+  height: 100%;
+  width: 30px;
+  background-color: pink;
+}
+#left-arrow {
+  float: left;
+}
+#right-arrow {
+  float: right;
+}
+#RHS {
+  width: 20%;
+  height: 379px;
+  background-color: blue;
+  float: left;
+  overflow: auto;
+}
+.RHS-card-item {
+  width: 100%;
+  min-height: 10px;
+  margin-top: 5px;
+  background-color: #31312d;
+}
+/*# sourceMappingURL=styles.css.map */
+/*# sourceMappingURL=styles.css.map */
