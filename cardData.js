@@ -80,3 +80,5 @@ function addToFirebaseDatabase(card) {
         cardName: cardName
     });
 }
+
+// 1.1.0 Commit
