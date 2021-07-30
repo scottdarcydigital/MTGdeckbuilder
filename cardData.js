@@ -30,8 +30,17 @@ function sendDeckData() {
 // get some of the json data from the scryfall API endpoint (this requires no access key)
 var _GET = 'https://api.scryfall.com/cards/search?q=c%3Awhite+cmc%3D1';
 
+var pageTemplate = ``;
+var pageCount = localStorage.setItem('pageCount', 0);
+var cardPageSize = 18;
+
 $(document).ready(function() {
     $.get(_GET, function(data, status) {
+
+        // append multiple pages development test
+        for (var x = 0; x < 4; x++) {
+            $('#main-container').append(`<div id="card-page-` + x + `" class="card-page" style="display: none"></div>`);
+        }
 
         // if there is no localStorgae Deck data then initialise it, else draw from this data in order to source urls
         // since the firebase end points add their own values to local toarage this is not appropriate and ust be standardised with the crd objects that you are avtuall using. Othwerise the code will not tirgger correcly
@@ -42,13 +51,41 @@ $(document).ready(function() {
                 var card_name = data.data[i].name;
                 localStorage.setItem("card-"+i, card_url);
                 var card_el = `<div onclick="addToFirebaseDatabase(this);" name="`+card_name+`" class="card SF" style="background-image:url('` + localStorage.getItem("card-"+i) + `');">`;
-                $('#main-container').append(card_el);
+
             }
         } else {
             for (var i = 0; i < data.data.length; i++) {
+                var tenCount = 0;
                 var card_name = data.data[i].name;
+                console.log(localStorage.getItem("card-"+i));
                 var card_el = `<div onclick="addToFirebaseDatabase(this);" name="`+card_name+`" class="card LS" style="background-image:url('` + localStorage.getItem("card-"+i) + `');">`;
-                $('#main-container').append(card_el);
+
+                // There needs to be a way of making this more dynamic later on....
+                if (i < cardPageSize) {
+                    $('#card-page-0').css("display","block");
+                    localStorage.setItem('pageCount', 0);
+                    $('#card-page-'+localStorage.getItem('pageCount')).append(card_el);
+                    tenCount = localStorage.getItem('pageCount') * 10;
+                    console.log(tenCount);
+                }
+                if (i > cardPageSize-1 && i < cardPageSize*2) {
+                    localStorage.setItem('pageCount', 1);
+                    $('#card-page-'+localStorage.getItem('pageCount')).append(card_el);
+                    tenCount = localStorage.getItem('pageCount') * 10;
+                    console.log(tenCount);
+                }
+                if (i > cardPageSize*2-1 && i < cardPageSize*3) {
+                    localStorage.setItem('pageCount', 2);
+                    $('#card-page-'+localStorage.getItem('pageCount')).append(card_el);
+                    tenCount = localStorage.getItem('pageCount') * 10;
+                    console.log(tenCount);
+                }
+                if (i > cardPageSize*3-1 && i < cardPageSize*4) {
+                    localStorage.setItem('pageCount', 3);
+                    $('#card-page-'+localStorage.getItem('pageCount')).append(card_el);
+                    tenCount = localStorage.getItem('pageCount') * 10;
+                    console.log(tenCount);
+                }
             }
         }
     });
@@ -79,6 +116,53 @@ function addToFirebaseDatabase(card) {
         cardID: $RHSLength,
         cardName: cardName
     });
+}
+
+function rightArrow() {
+    console.log($('#card-page-0'));
+    if ($('#card-page-0').is(":visible")) {
+        $('#card-page-0').css("display","none");
+        $('#card-page-1').css("display","block");
+        return;
+    }
+    if ($('#card-page-1').is(":visible")) {
+        $('#card-page-1').css("display","none");
+        $('#card-page-2').css("display","block");
+        return;
+    }
+    if ($('#card-page-2').is(":visible")) {
+        $('#card-page-2').css("display","none");
+        $('#card-page-3').css("display","block");
+        return;
+    }
+    if ($('#card-page-3').is(":visible")) {
+        $('#card-page-3').css("display","none");
+        $('#card-page-0').css("display","block");
+        return;
+    }
+}
+
+function leftArrow() {
+    if ($('#card-page-0').is(":visible")) {
+        $('#card-page-0').css("display","none");
+        $('#card-page-3').css("display","block");
+        return;
+    }
+    if ($('#card-page-1').is(":visible")) {
+        $('#card-page-1').css("display","none");
+        $('#card-page-0').css("display","block");
+        return;
+    }
+    if ($('#card-page-3').is(":visible")) {
+        $('#card-page-3').css("display","none");
+        $('#card-page-2').css("display","block");
+        return;
+    }
+    if ($('#card-page-2').is(":visible")) {
+        $('#card-page-2').css("display","none");
+        $('#card-page-1').css("display","block");
+        return;
+    }
 }
 
 // 1.1.0 Commit
